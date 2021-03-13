@@ -1,10 +1,11 @@
 var express = require('express');
 var app = express();
 var absolutePath = __dirname+"/views/index.html"
-app.get('/:word/echo', function(req, res, next) {
-  next();
-}, function(req, res) {
-  res.send({echo: req.params.word});
+app.get("/name", function(req, res) {
+  var { first: firstName, last: lastName } = req.query;
+  res.json({
+    name: `${firstName} ${lastName}`
+  });
 });
 app.use(function middleware(req, res, next) {
   console.log(req.method + ' ' + req.path + ' - ' + req.ip)
