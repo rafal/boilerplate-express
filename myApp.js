@@ -1,16 +1,14 @@
 var express = require('express');
 var app = express();
 var absolutePath = __dirname+"/views/index.html"
+var bodyParser = require('body-parser')
 app.get("/name", function(req, res) {
   var { first: firstName, last: lastName } = req.query;
   res.json({
     name: `${firstName} ${lastName}`
   });
 });
-app.use(function middleware(req, res, next) {
-  console.log(req.method + ' ' + req.path + ' - ' + req.ip)
-  next();
-});
+app.use(bodyParser.urlencoded({extended: false}));
 app.get("/json", (req, res) => {
   const msg = "Hello json";
   return res.json({"message": process.env.MESSAGE_STYLE === "uppercase" ? msg.toUpperCase() : msg})})
